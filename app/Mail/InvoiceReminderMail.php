@@ -22,10 +22,10 @@ class InvoiceReminderMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Reminder: Invoice ' . $this->invoice->invoice_number . ' Payment Due')
+        return $this->subject('Herinnering: factuur ' . $this->invoice->invoice_number . ' betaaldatum overschreden')
             ->view('emails.invoice-reminder')
             ->attach($this->pdfPath, [
-                'as' => 'invoice-' . $this->invoice->invoice_number . '.pdf',
+                'as' => 'factuur-' . $this->invoice->invoice_number . '.pdf',
                 'mime' => 'application/pdf',
             ]);
     }

@@ -6,6 +6,7 @@ use App\Http\Actions\User\CreateUser;
 use App\Http\Actions\User\UpdateUser;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -103,10 +104,10 @@ class UserController extends Controller
     {
         $roles = Role::all();
         $userHasRoles = array_column(json_decode($user->roles, true), 'id');
-        $clients = Client::orderBy('achternaam')->get();
-        $lessors = Lessor::orderBy('achternaam')->get();
+       /* $clients = Client::orderBy('achternaam')->get();
+        $lessors = Lessor::orderBy('achternaam')->get();*/
         //dd($clients);
-        return view('admin.user.edit', compact('user', 'roles', 'userHasRoles', 'clients', 'lessors'));
+        return view('admin.user.edit', compact('user', 'roles', 'userHasRoles'));
     }
 
     /**

@@ -187,7 +187,12 @@ console.log(this.invoiceStats);
                             </div>
                             <div class="flex-1 min-w-0">
                                 <p class="text-sm font-medium text-gray-900" x-text="email.subject"></p>
-                                <p class="text-sm text-gray-500" x-text="email.client.companyname"></p>
+                                <p class="text-sm text-gray-500">
+                                    <a :href="`/client/${email.client.id}/edit`"
+                                       class="text-blue-600 hover:text-blue-800"
+                                       x-text="email.client.companyname">
+                                    </a>
+                                </p>
                                 <p class="text-xs text-gray-400" x-text="new Date(email.sent_at).toLocaleString()"></p>
                             </div>
                             <div class="flex-shrink-0">
@@ -216,7 +221,12 @@ console.log(this.invoiceStats);
                                 </span>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900" x-text="client.companyname"></p>
+                                <p class="text-sm font-medium text-gray-900">
+                                    <a :href="`/client/${client.id}/edit`"
+                                       class="text-blue-600 hover:text-blue-800"
+                                       x-text="client.companyname">
+                                    </a>
+                                  </p>
                                 <p class="text-sm text-gray-500">
                                     <span x-text="client.total_invoices"></span> invoices,
                                     <span x-text="formatCurrency(client.total_amount)"></span> total

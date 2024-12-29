@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
+use App\Mail\InvoiceReminderMail;
 
 //use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\InvoiceMail;
@@ -316,6 +317,9 @@ class InvoiceController extends Controller
 
             // Delete temporary file
             unlink($pdfPath);
+
+            // Set Invoice.status to Sent
+            $invoice = Invoice::whereId($id)->update(['status' => 'sent']);
 
             return redirect()->back()->with('success', 'Invoice has been emailed successfully.');
         } catch (\Exception $e) {

@@ -14,6 +14,11 @@
                         <div class="pull-right mb-8">
                             <a class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex-end"
                                href="https://invoice.vectrus.nl/client"> Terug</a>
+                            &nbsp;
+                            <a
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 flex-end"
+                                href="/client/{{ $client->id }}/emails"><i
+                                    class="fa fa-envelope text-orange-700"></i> {{ __('Client E-mails') }}</a>
                         </div>
                     </div>
 
