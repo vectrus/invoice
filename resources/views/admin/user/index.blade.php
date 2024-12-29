@@ -9,13 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    @can('user create')
-                        <p>Stop!</</p>
+                    @hasrole('admin')
+                        
                         <x-admin.add-link href="{{ route('user.create') }}">
                             {{ __('Add User') }}
                         </x-admin.add-link>
-                    @endcan
-
+                    @endhasrole
                         <div class="py-2">
                             <div class="min-w-full border-b border-gray-200 shadow overflow-x-auto">
                                 <x-admin.grid.search action="{{ route('user.index') }}"/>
@@ -28,11 +27,11 @@
                                             <x-admin.grid.th>
                                                 @include('admin.includes.sort-link', ['label' => 'Email', 'attribute' => 'email'])
                                             </x-admin.grid.th>
-                                            @canany(['user edit', 'user delete'])
+                                            @hasrole('admin')
                                                 <x-admin.grid.th>
                                                     {{ __('Actions') }}
                                                 </x-admin.grid.th>
-                                            @endcanany
+                                            @endhasrole
                                         </tr>
                                     </x-slot>
                                     <x-slot name="body">
@@ -49,19 +48,19 @@
                                                         {{ $user->email }}
                                                     </div>
                                                 </x-admin.grid.td>
-                                                @canany(['user edit', 'user delete'])
+                                                @hasrole('admin')
                                                     <x-admin.grid.td>
                                                         <form action="{{ route('user.destroy', $user->id) }}"
                                                               method="POST">
                                                             <div class="flex">
-                                                                @can('user edit')
+                                                                @hasrole('admin')
                                                                     <a href="{{route('user.edit', $user->id)}}"
                                                                        class="inline-flex items-center px-4 py-2 mr-4 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
                                                                         {{ __('Edit') }}
                                                                     </a>
-                                                                @endcan
+                                                                @endhasrole
 
-                                                                @can('user delete')
+                                                                @hasrole('admin')
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button
@@ -69,11 +68,11 @@
                                                                         onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">
                                                                         {{ __('Delete') }}
                                                                     </button>
-                                                                @endcan
+                                                                @endhasrole
                                                             </div>
                                                         </form>
                                                     </x-admin.grid.td>
-                                                @endcanany
+                                                @endhasrole
                                             </tr>
                                         @endforeach
                                         @if($users->isEmpty())

@@ -9,11 +9,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    @can('permission create')
+                    @hasrole('admin')
                         <x-admin.add-link href="{{ route('permission.create') }}">
                             {{ __('Add Permission') }}
                         </x-admin.add-link>
-                    @endcan
+                    @endhasrole
 
                     <div class="py-2">
                         <div class="min-w-full border-b border-gray-200 shadow overflow-x-auto">
@@ -24,11 +24,11 @@
                                         <x-admin.grid.th>
                                             @include('admin.includes.sort-link', ['label' => 'Name', 'attribute' => 'name'])
                                         </x-admin.grid.th>
-                                        @canany(['permission edit', 'permission delete'])
+                                        @hasrole('admin')
                                             <x-admin.grid.th>
                                                 {{ __('Actions') }}
                                             </x-admin.grid.th>
-                                        @endcanany
+                                        @endhasrole
                                     </tr>
                                 </x-slot>
                                 <x-slot name="body">
@@ -40,18 +40,18 @@
                                                        class="no-underline hover:underline text-cyan-600">{{ $permission->name }}</a>
                                                 </div>
                                             </x-admin.grid.td>
-                                            @canany(['permission edit', 'permission delete'])
+                                            @hasrole('admin')
                                                 <x-admin.grid.td>
                                                     <form action="{{ route('permission.destroy', $permission->id) }}" method="POST">
                                                         <div class="flex">
-                                                            @can('permission edit')
+                                                            @hasrole('admin')
                                                                 <a href="{{route('permission.edit', $permission->id)}}"
                                                                    class="inline-flex items-center px-4 py-2 mr-4 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
                                                                     {{ __('Edit') }}
                                                                 </a>
-                                                            @endcan
+                                                            @endhasrole
 
-                                                            @can('permission delete')
+                                                            @hasrole('admin')
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button
@@ -59,11 +59,11 @@
                                                                     onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">
                                                                     {{ __('Delete') }}
                                                                 </button>
-                                                            @endcan
+                                                            @endhasrole
                                                         </div>
                                                     </form>
                                                 </x-admin.grid.td>
-                                            @endcanany
+                                            @endhasrole
                                         </tr>
                                     @endforeach
                                     @if($permissions->isEmpty())
