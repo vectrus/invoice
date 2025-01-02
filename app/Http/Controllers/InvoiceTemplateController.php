@@ -24,6 +24,7 @@ class InvoiceTemplateController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required|string',
+            'html' => 'required|string',
             'is_default' => 'boolean',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -41,6 +42,7 @@ class InvoiceTemplateController extends Controller
         InvoiceTemplate::create([
             'name' => $validated['name'],
             'content' => $validated['content'],
+            'html' => $validated['html'],
             'is_default' => $validated['is_default'] ?? false,
             'logo_path' => $logoPath
         ]);
@@ -62,6 +64,7 @@ class InvoiceTemplateController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required|string',
+            'html' => 'required|string',
             'is_default' => 'boolean',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -75,6 +78,7 @@ class InvoiceTemplateController extends Controller
         $data = [
             'name' => $validated['name'],
             'content' => $validated['content'],
+            'html' => $validated['html'],
             'is_default' => $validated['is_default'] ?? false,
         ];
 

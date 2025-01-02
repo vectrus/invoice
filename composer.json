@@ -13,7 +13,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "spatie/laravel-permission": "^6.4",
+        "spatie/laravel-permission": "^6.10",
         "tinymce/tinymce": "^7.6"
     },
     "require-dev": {

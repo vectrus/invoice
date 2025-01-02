@@ -110,6 +110,8 @@
                                         </option>
                                         <option value="paid" :selected=" invoice.status == paid">Paid
                                         </option>
+                                        <option value="cash" :selected=" invoice.status == cash">Cash
+                                        </option>
                                     </select>
                                 </div>
                             </div>

@@ -200,12 +200,14 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Issue Date</label>
                                 <input type="date" name="issue_date" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                value="{!! date('Y-m-d') !!}" >
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Due Date</label>
                                 <input type="date" name="due_date" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                       value="{!! date('Y-m-d', strtotime(date('Y-m-d'). ' + '.config('settings.paymentterm').' days')) !!}">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Status</label>
@@ -214,6 +216,7 @@
                                     <option value="draft">Draft</option>
                                     <option value="sent">Sent</option>
                                     <option value="paid">Paid</option>
+                                    <option value="cash">Cash</option>
                                 </select>
                             </div>
                         </div>

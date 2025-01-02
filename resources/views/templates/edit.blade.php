@@ -50,11 +50,11 @@
                             @enderror
                         </div>
 
-                       {{-- <div class="mb-6">
+                        <div class="mb-6 w100">
                             <label class="block text-sm font-medium text-gray-700">HTML Content</label>
                             <div class="mt-1 border rounded-md @error('html') border-red-300 @enderror">
 
-                                <textarea name="html" class="h-96 w-100 border-0" id="content-input"
+                                <textarea name="html" class="tinyEditor_dep border-0 h-96 w-full" id="content-input"
                                           >
                                     {{ old('html', $template->html ?? '') }}
                                 </textarea>
@@ -63,7 +63,7 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
---}}
+
                         <div class="mb-6 w100">
                             <label class="block text-sm font-medium text-gray-700">CSS Content</label>
                             <div class="mt-1 border rounded-md @error('content') border-red-300 @enderror">

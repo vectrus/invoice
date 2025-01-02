@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientEmailController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -11,8 +12,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceItemController;
 use App\Http\Controllers\InvoiceTemplateController;
-use App\Http\Controllers\PDFController;
-use App\Http\Controllers\PermissionController;
+//use App\Http\Controllers\PDFController;
+//use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ImageUploadController;
 
@@ -72,6 +73,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/invoice/{invoice}/reminder', [InvoiceController::class, 'sendReminder'])
         ->name('invoice.reminder');
 
+
+    Route::get('/reports/income', [ReportController::class, 'index'])->name('income');
+    Route::post('/reports/generate-report', [ReportController::class, 'generateReport'])->name('generate-report');
+    Route::post('/reports/generate-pdf', [ReportController::class, 'generatePdf'])->name('generate-pdf');
 
     Route::resource('/contacts', ContactController::class);
     Route::get('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');

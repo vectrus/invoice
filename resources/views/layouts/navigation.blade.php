@@ -79,6 +79,10 @@
                                              :active="request()->routeIs('invoice.create')">
                                 {{ __('Nieuwe factuur') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('income')"
+                                             :active="request()->routeIs('income')">
+                                {{ __('Omzet overzicht') }}
+                            </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
                 </div>

@@ -8,7 +8,12 @@
     </style>
 </head>
 <body>
+
+
 <div class="invoice">
+
+    {!! $template->html !!}
+
     <div class="header">
         <img src="{{ $imageUrl }}"/>
         <h1>Factuur</h1>
@@ -32,7 +37,7 @@
 
                KVK:  {{ $settings['kvk'] }}<br>
                 BTW: {{ $settings['btw-nummer'] }}<br><br>
-          {{--  Tel: {{ $settings['phone'] }}--}}</p>
+            Tel: {{ $settings['phone'] }}</p>
         </div>
 
         <div class="invoice-info">
@@ -119,7 +124,7 @@
                 <strong>Referentie:</strong> {{ $invoice->invoice_number }}</p>
         </div>
 
-       {{-- {!! dd($invoice) !!}--}}
+        {!! dd($invoice) !!}
 
         <div class="terms">
             <p>Gelieve te betalen binnen  {{ $invoice->due_date->diffInDays($invoice->issue_date) }} dagen</p>

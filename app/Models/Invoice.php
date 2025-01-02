@@ -70,6 +70,11 @@ class Invoice extends Model
         return $this->items->sum('tax_amount');
     }
 
+    /*public function getTotalTaxAttribute()
+    {
+        return $this->items->sum('tax_amount');
+    }*/
+
     public function getTotalAttribute()
     {
         return $this->items->sum('total');
@@ -109,4 +114,6 @@ class Invoice extends Model
             . "&reference={$this->invoice_number}"
             . "&name=" . urlencode($this->client->companyname);
     }
+
+
 }
