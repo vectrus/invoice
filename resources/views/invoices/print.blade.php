@@ -16,7 +16,7 @@
                      src="data:image/png;base64, {!! base64_encode(file_get_contents('storage/'.$imageUrl)) !!}"
                 {{--{{ storage_path('app/public/'.$imageUrl) }}--}}
 
-                     alt="Vectrus Internet"/>
+                     alt="{{ config('setting.companyname') }}"/>
             {{--@endif--}}
 
             {{--<img class="company-logo" src="/{{ $imageUrl }}" alt="Vectrus Internet"/>--}}
@@ -67,7 +67,7 @@
     </div>
 
     <div class="items-section">
-        <br><br><br><br>
+
 
         <table class="items-table">
             <thead>
