@@ -111,12 +111,13 @@
     </div>
 
     <div class="footer-container">
-        <br><br><br><br><br><br>
+
         <div class="footer-info">
             <div class="payment-info">
                 <h4>Betaling via:</h4>
                 <p>
-                    <strong>Bank:</strong> {{ $settings['iban'] }}<br>
+                    <strong>Bank:</strong><br/> {{ $settings['iban'] }}<br>
+
                     <strong>Referentie:</strong> {{ $invoice->invoice_number }}
                 </p>
             </div>
