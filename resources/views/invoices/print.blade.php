@@ -12,17 +12,17 @@
     <div class="header">
         <div class="logo-section">
             {{--@if(file_exists(storage_path( $imageUrl)))--}}
-                <img class="company-logo"
-                     src="data:image/png;base64, {!! base64_encode(file_get_contents('storage/'.$imageUrl)) !!}"
-                {{--{{ storage_path('app/public/'.$imageUrl) }}--}}
+            <img class="company-logo"
+                 src="data:image/png;base64, {!! base64_encode(file_get_contents('storage/'.$imageUrl)) !!}"
+                 {{--{{ storage_path('app/public/'.$imageUrl) }}--}}
 
-                     alt="{{ config('setting.companyname') }}"/>
+                 alt="{{ config('setting.companyname') }}"/>
             {{--@endif--}}
 
             {{--<img class="company-logo" src="/{{ $imageUrl }}" alt="Vectrus Internet"/>--}}
         </div>
         <h1 class="invoice-title">FAKTUUR</h1>
-        <br><br><br>
+        <br><br>
         <div class="info-container">
             <div class="client-info">
                 <div class="client-details">
@@ -111,7 +111,7 @@
     </div>
 
     <div class="footer-container">
-
+        <br>
         <div class="footer-info">
             <div class="payment-info">
                 <h4>Betaling via:</h4>
