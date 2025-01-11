@@ -12,7 +12,9 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.5.9",
         "alpinejs": "^3.14.8",
-        "tailwind": "^4.0.0"
+        "autoprefixer": "^10.4.20",
+        "chart.js": "^4.4.7"
     }
 }

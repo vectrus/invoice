@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\ClientEmail;
 use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -24,6 +25,21 @@ class InvoiceMail extends Mailable
     {
         $this->invoice = $invoice;
         $this->pdfPath = $pdfPath;
+        $this->body = new Content(
+            view: 'emails.invoice',
+            with: [
+                'invoice' => $this->invoice,
+            ],
+        );
+        ClientEmail::create([
+            'client_id' => $invoice->client->id,
+            'subject' => config('settings.companyname') . ' factuur ' . $invoice->invoice_number,
+            'body' => "Het default faktuur template is meegestuurd en de faktuur als pdf",
+            'sender_email' => config('settings.email'),
+            'recipient_email' => $invoice->client->email,
+            'status' => 'sent'
+
+            ]);
     }
 
     /**
@@ -32,7 +48,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invoice #' . $this->invoice->invoice_number,
+            subject: config('settings.companyname') . ' factuur ' . $this->invoice->invoice_number,
         );
     }
 
@@ -58,7 +74,7 @@ class InvoiceMail extends Mailable
     {
         return [
             Attachment::fromPath($this->pdfPath)
-                ->as('Invoice-' . $this->invoice->invoice_number . '.pdf')
+                ->as('Factuur -'  .config('settings.companyname') . '-' . $this->invoice->invoice_number . '.pdf')
                 ->withMime('application/pdf'),
         ];
     }

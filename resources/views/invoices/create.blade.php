@@ -237,9 +237,9 @@
                                         <input type="text" x-model="item.name" :name="'items['+index+'][name]'"
                                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                                placeholder="Item name" required>
-                                        <textarea x-model="item.description" :name="'items['+index+'][description]'"
+                                        <textarea x-model="item.notes" :name="'items['+index+'][notes]'"
                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                                  rows="2" placeholder="Description"></textarea>
+                                                  rows="2" placeholder="Description / Notes"></textarea>
                                     </div>
                                     <div class="col-span-2">
                                         <input type="number" x-model="item.quantity"

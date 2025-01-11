@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+
+#logo {
+    max-width: 250px;
+    height: auto;
+}
+.alert {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    border: 1px solid #0a1620;
+    background: transparent;
+    padding: 8px 20px;
+    margin: 20px;
+
+
+}
+.alert-success {
+    background-color: #3e954e;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #e74c3c;
+    color: white;
+}
 .error {
     color: red;
     font-weight: bold;
@@ -157,4 +183,12 @@
     .invoice {
         max-width: none;
     }
+}
+
+:root {
+    --primary-color: #503f3f;
+    --secondary-color: #986145;
+    --accent-color: #3498db;
+    --light-gray: #f5f6fa;
+    --border-color: transparent;
 }

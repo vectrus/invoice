@@ -19,8 +19,8 @@
 
 
 <p>Vriendelijke groet,<br>
-    San Reklame <br>
+    {!! config('setting.companyname') !!} <br>
 
-    </br>Dennis</p>
+    </p>
 </body>
 </html>

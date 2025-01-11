@@ -1,28 +1,23 @@
 <?php
 
-//namespace App;
 
 
-namespace App\Http\Helpers;
-class Helpers
-{
-    /**
-     * Fetch Cached settings from database
-     *
-     * @return string
-     */
 
 
-    function getSetting($key)
+use App\Models\Contact;
+
+
+
+if (!function_exists('getContactData')) {
+    function getContactData($primary_contact_id)
     {
-
-        $setting = \App\Models\Setting::where('key', '=', $key)->first();
-
-        dd($setting);
-
-        return $settingValue;
+        if($primary_contact_id != null) {
+            $contact = Contact::whereId($primary_contact_id)->first();
+            return $contact->firstname . ' ' . $contact->lastname;
+        }
+        else {
+            return null;
+        }
 
     }
-
 }
-

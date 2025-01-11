@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('role', RoleController::class);
     Route::resource('client', ClientController::class);
     Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
-    Route::post('client/quickStore', [ClientController::class, 'quickStore'])->name('client.quickStore');
+    Route::post('/client/quickStore', [ClientController::class, 'quickStore'])->name('client.quickStore');
     Route::post('/client/{client}/update-primary-contact', [ClientController::class, 'updatePrimaryContact'])
         ->name('client.update-primary-contact');
 
@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
     Route::put('/settings/update', [SettingController::class, 'update'])->name('settings.update');
     Route::delete('/settings/{setting}', [SettingController::class, 'destroy'])->name('settings.destroy');
+    Route::put('/settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
     Route::post('/settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
 
 

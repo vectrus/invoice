@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Factuur San Reklame</title>
+    <title>Factuur Vectrus Internet</title>
 </head>
 <body>
 <h2>Beste {{ $invoice->client->companyname }},</h2>
@@ -19,8 +19,8 @@
 <p>Bedankt voor uw vertrouwen!</p>
 
 <p>Vriendelijke groet,<br>
-    San Reklame <br>
+    Vectrus Internet <br>
 
-    </br>Dennis</p>
+    </br>julius keijzer</p>
 </body>
 </html>

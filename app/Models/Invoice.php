@@ -65,15 +65,15 @@ class Invoice extends Model
         return $this->items->sum('subtotal');
     }
 
-    public function getTotalTaxAttribute()
-    {
-        return $this->items->sum('tax_amount');
-    }
-
-    /*public function getTotalTaxAttribute()
+   /* public function getTotalTaxAttribute()
     {
         return $this->items->sum('tax_amount');
     }*/
+
+    public function getTotalTaxAttribute()
+    {
+        return  $this->items->sum('total') - $this->items->sum('subtotal');
+    }
 
     public function getTotalAttribute()
     {

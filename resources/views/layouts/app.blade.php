@@ -107,6 +107,12 @@
                             this.successMessage = '';
                         }, 3000); // Message will disappear after 3 seconds
                     },
+                    successMessage(message) {
+                        this.successMessage = message;
+                        setTimeout(() => {
+                            this.successMessage = '';
+                        }, 3000); // Message will disappear after 3 seconds
+                    },
                     async submitForm() {
                         this.errors = {};
 

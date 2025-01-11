@@ -34,6 +34,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+
+        //dd($request);
         $validated = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
@@ -42,6 +44,7 @@ class ContactController extends Controller
             'contactinfo' => 'nullable|string|max:1000',
             'client_id' => 'nullable|exists:clients,id'
         ]);
+
 
         $contact = Contact::create($validated);
 

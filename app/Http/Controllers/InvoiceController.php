@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -42,7 +43,7 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
-
+//dd($request);
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'issue_date' => 'required|date',
@@ -51,6 +52,7 @@ class InvoiceController extends Controller
             'notes' => 'nullable|string',
             'items' => 'required|array|min:1',
             'items.*.name' => 'required|string|max:255',
+            'items.*.notes' => 'nullable|string',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.price' => 'required|numeric|min:0',
             'items.*.tax_percentage' => 'required|in:6,21'
@@ -76,9 +78,10 @@ class InvoiceController extends Controller
 
             // Create invoice items
             foreach ($validated['items'] as $item) {
-                dd($item);
+                //dd($item);
                 $invoice->items()->create([
                     'name' => $item['name'],
+                    'notes' => $item['notes'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                     'tax_percentage' => $item['tax_percentage']
@@ -118,6 +121,7 @@ class InvoiceController extends Controller
 
     public function update(Request $request, Invoice $invoice)
     {
+        //dd($request);
         $validated = $request->validate([
             'client_id' => 'required|exists:clients,id',
             'issue_date' => 'required|date',
@@ -126,9 +130,11 @@ class InvoiceController extends Controller
             'notes' => 'nullable|string',
             'items' => 'required|array|min:1',
             'items.*.name' => 'required|string|max:255',
+            'items.*.notes' => 'nullable|string',
             'items.*.quantity' => 'required|numeric|min:1',
             'items.*.price' => 'required|numeric|min:0',
-            'items.*.tax_percentage' => 'required|in:6,21'
+            'items.*.tax_percentage' => 'required|in:6,21',
+            'items.*.description' => 'nullable|string',
         ]);
 
         try {
@@ -157,6 +163,7 @@ class InvoiceController extends Controller
                     'name' => $item['name'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
+                    'notes' => $item['notes'],
                     'tax_percentage' => $item['tax_percentage']
                 ]);
             }
@@ -164,7 +171,7 @@ class InvoiceController extends Controller
             DB::commit();
 
             return redirect()
-                ->route('invoice.index')
+                ->route('invoice.edit', $invoice->id)
                 ->with('success', 'Invoice updated successfully');
 
         } catch (\Exception $e) {
@@ -190,7 +197,7 @@ class InvoiceController extends Controller
         foreach ($rawsettings as $key => $value) {
             $settings[$value['key']] = $value['value'];
         }
-        $imageUrl = public_path('/storage/' . $template->logo_path);
+        $imageUrl = /*env('APP_URL').'/storage/' .*/ $template->logo_path;
 
         $pdf = PDF::loadView('invoices.print', [
             'invoice' => $invoice,
@@ -284,6 +291,7 @@ class InvoiceController extends Controller
 
     public function emailInvoice($id)
     {
+
         try {
             $invoice = Invoice::with(['client', 'items'])->findOrFail($id);
 
@@ -294,7 +302,8 @@ class InvoiceController extends Controller
             foreach ($rawsettings as $key => $value) {
                 $settings[$value['key']] = $value['value'];
             }
-            $imageUrl = public_path('/storage/' . $template->logo_path);
+            $imageUrl = /*env('APP_URL').'/storage/' .*/
+                $template->logo_path;
 
             $pdf = PDF::loadView('invoices.print', [
                 'invoice' => $invoice,
@@ -305,17 +314,22 @@ class InvoiceController extends Controller
                 'imageUrl' => $imageUrl
             ]);
 
+
+
             $pdfPath = storage_path('app/temp/invoice-' . $invoice->invoice_number . '.pdf');
             $pdf->save($pdfPath);
-
+//dd($pdfPath);
             Mail::to($invoice->client->email)
                 ->send(new InvoiceMail($invoice, $pdfPath));
+
+
 
             unlink($pdfPath);
 
             $invoice->update(['status' => 'sent']);
 
             return redirect()->back()->with('success', 'Invoice has been emailed successfully.');
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to send invoice: ' . $e->getMessage());
         }

@@ -115,13 +115,15 @@ class ClientController extends Controller
 
     public function quickStore(Request $request)
     {
+       // Log::info($request);
+
         $validated = $request->validate([
             'companyname' => 'required',
             'phonenumber' => 'required',
             'email' => 'required',
             'address' => 'nullable',
-            'postalcode' => 'nullable',
-            'city' => 'nullable'
+
+
 
 
         ]);
@@ -140,11 +142,11 @@ class ClientController extends Controller
     {
 
 
-            $client = CLient::whereId($id)->first();
+            $client = CLient::whereId($id)->with('contacts')->first();
+            $primary_contact = Contact::whereId($client->primary_contact_id)->first();
 
 
-
-        return view('clients.edit', compact('client'));
+        return view('clients.edit', compact('client', 'primary_contact'));
     }
 
     public function update(Request $request, $id)
@@ -157,13 +159,13 @@ class ClientController extends Controller
             'postalcode' => 'required',
             'city' => 'required',
             'phonenumber' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'mobile' => 'present|nullable',
             'invoiceaddress' => 'present|nullable',
             'invoicepostalcode' => 'present|nullable',
             'invoicecity' => 'present|nullable',
             'memo' => 'present|nullable',
-            'primary_contact_id' => 'present|nullable',
+           /* 'primary_contact_id' => 'present|nullable',*/
 
 
         ]);

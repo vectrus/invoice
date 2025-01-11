@@ -44,7 +44,7 @@ class InvoiceItemController extends Controller
 
     public function edit(Request $request)
     {
-        dd($request);
+      //  dd($request);
         $clientid = $request->client_id;
         $newinvoicenumber = $request->invoicenumber;
         return view('invoices.edit', compact('clientid', 'newinvoicenumber'));

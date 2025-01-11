@@ -98,7 +98,7 @@
                                     <tr>
 
                                         <td class="hidden sm:table-cell whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                            prim relatie
+                                            {{ getContactData($client->primary_contact_id) }}
                                         </td>
 
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><a href="{{ route('client.edit', $client->id) }}">{{ $client->companyname }} </a></td>

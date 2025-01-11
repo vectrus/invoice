@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\InvoiceTemplate;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class InvoiceTemplateController extends Controller
 {
@@ -132,8 +134,8 @@ class InvoiceTemplateController extends Controller
         }
 
         //$imageUrl = public_path('/storage/' . $template->logo_path);
-        $imageUrl = env('API_URL').'/storage/' . $template->logo_path;
-
+        $imageUrl = /*env('API_URL').'/storage/' .*/ $template->logo_path;
+//dd($imageUrl);
         // Get the latest invoice for preview
         $invoice = \App\Models\Invoice::with(['client', 'items'])
             ->latest()
