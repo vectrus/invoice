@@ -96,6 +96,14 @@ class Invoice extends Model
         });
     }
 
+    public function calculateTotalTax(): float
+    {
+        return $this->items->sum(function ($item) {
+            $subtotal = $item->price * $item->quantity;
+            $tax = $subtotal * ($item->tax_percentage / 100);
+            return $tax;
+        });
+    }
     public function generatePaymentUrl()
     {
         $settings = [];
