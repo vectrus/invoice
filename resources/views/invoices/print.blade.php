@@ -102,7 +102,7 @@
             <tfoot>
             <tr class="total-row">
                 <td colspan="4" class="text-right"><strong>Totaal te betalen:</strong></td>
-                <td class="num-col">€{{ number_format($invoice->amount_excl, 2) }}</td>
+                <td class="num-col">€{{ number_format($invoice->calculateTotalExcl, 2) }}</td>
                 <td class="num-col">€{{ number_format($invoice->calculateTotalTax(), 2) }}</td>
                 <td class="num-col">€{{ number_format($invoice->calculateTotal(), 2) }}</td>
             </tr>

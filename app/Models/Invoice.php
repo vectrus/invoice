@@ -96,6 +96,14 @@ class Invoice extends Model
         });
     }
 
+    public function calculateTotalExcl(): float
+    {
+        return $this->items->sum(function ($item) {
+            $subtotal = $item->price * $item->quantity;
+
+            return $subtotal;
+        });
+    }
     public function calculateTotalTax(): float
     {
         return $this->items->sum(function ($item) {
