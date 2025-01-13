@@ -369,4 +369,34 @@ class InvoiceController extends Controller
             return redirect()->back()->with('error', 'Failed to send reminder: ' . $e->getMessage());
         }
     }
+
+    public function destroy(Invoice $invoice)
+    {
+        try {
+            DB::beginTransaction();
+
+            // Delete all related invoice items first
+            $invoice->items()->delete();
+
+            // Delete the invoice
+            $invoice->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->route('invoice.index')
+                ->with('success', 'Invoice deleted successfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Invoice Deletion Error:', [
+                'invoice_id' => $invoice->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return back()
+                ->withErrors(['error' => 'Error deleting invoice: ' . $e->getMessage()]);
+        }
+    }
 }
