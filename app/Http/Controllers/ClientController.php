@@ -203,4 +203,32 @@ class ClientController extends Controller
             ], 500);
         }
     }
+
+    public function destroy(Client $client)
+    {
+        try {
+            DB::beginTransaction();
+
+
+            // Delete the invoice
+            $client->delete();
+
+            DB::commit();
+
+            return redirect()
+                ->route('client.index')
+                ->with('success', 'Client verwijderd');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Client verwijder Error:', [
+                'client_id' => $$client->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return back()
+                ->withErrors(['error' => 'Error deleting client: ' . $e->getMessage()]);
+        }
+    }
 }

@@ -85,10 +85,10 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('templates', InvoiceTemplateController::class);
-    Route::get('templates/{template}/preview', [InvoiceTemplateController::class, 'preview'])
-        ->name('templates.preview');    Route::resource('invoiceitem', InvoiceItemController::class);
+    Route::get('templates/{template}/preview', [InvoiceTemplateController::class, 'preview'])->name('templates.preview');
+    Route::resource('invoiceitem', InvoiceItemController::class);
 
-        Route::resource('permission', \App\Http\Controllers\PermissionController::class);
+    Route::resource('permission', \App\Http\Controllers\PermissionController::class);
     /*Route::get('user', [UserController::class, 'index'])->name('user.index');*/
 });
 

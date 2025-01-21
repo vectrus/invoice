@@ -8,154 +8,135 @@
     </style>
 </head>
 <body>
-
-
-<div class="invoice"
-     >
-
-    {{--  {!! $template->html !!}--}}
-
+<div class="invoice">
     <div class="header">
-        <br><br><br><br><br><br><br><br><br>
-        <h1 id="header-title" >FAKTUUR</h1>
+        <div class="logo-section">
+            {{--@if(file_exists(storage_path( $imageUrl)))--}}
+            <img class="company-logo"
+                 src="data:image/png;base64, {!! base64_encode(file_get_contents('storage/'.$imageUrl)) !!}"
+                 {{--{{ storage_path('app/public/'.$imageUrl) }}--}}
+
+                 alt="{{ config('setting.companyname') }}"/>
+            {{--@endif--}}
+
+            {{--<img class="company-logo" src="/{{ $imageUrl }}" alt="Vectrus Internet"/>--}}
+        </div>
+        <h1 class="invoice-title">FAKTUUR</h1>
         <br><br>
-        <div id="top">
+        <div class="info-container">
             <div class="client-info">
                 <div class="client-details">
-                    <h2>Faktuuradres</h2>
-                    <p class="client-name"><b> {{ $invoice->client->companyname }}</b><br>
+                    <p class="client-name" style="margin: 0">
+                        <span class="label">Aan:</span><br>
+                        <strong>{{ $invoice->client->companyname }}</strong><br>
                         {{ $invoice->client->address }}<br>
-                        {{ $invoice->client->postalcode }} {{ $invoice->client->city }}</p>
-
+                        {{ $invoice->client->postalcode }} {{ $invoice->client->city }}
+                    </p>
                     @if($invoice->client->vat_number)
-                        <p>BTW-nummer klant: {{ $invoice->client->vat_number }}</p>
+                        <p class="vat-number" style="margin: 2mm 0 0 0">BTW-nummer
+                            klant: {{ $invoice->client->vat_number }}</p>
                     @endif
                 </div>
             </div>
 
-            <div class="company-info" >
-                <div>
-                    <h2>Faktuurnummer</h2>
-                    <p>{{ $invoice->invoice_number }}</p>
+            <div class="invoice-details">
+                <table class="info-table">
+                    <tr>
+                        <td class="label"><strong>Factuurnummer:</strong></td>
+                        <td>{{ $invoice->invoice_number }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label"><strong>Datum:</strong></td>
+                        <td>{{ $invoice->issue_date->format('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label"><strong>Betalen voor:</strong></td>
+                        <td>{{ $invoice->due_date->format('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label"><strong>Bank:</strong></td>
+                        <td>{{ $settings['iban'] }}</td>
+                    </tr>
+                    <tr>
+                        <td class="label"><strong>Referentie:</strong></td>
+                        <td>{{ $invoice->invoice_number }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="items-section">
 
 
-                    {{--<p>Van: <br/><b>{{ $settings['companyname'] }}</b><br>
+        <table class="items-table">
+            <thead>
+            <tr>
+                <th class="desc-col">Omschrijving</th>
+                <th class="num-col">Hv</th>
+                <th class="num-col">Stuksprijs</th>
+                <th class="num-col">BTW%</th>
+                <th class="num-col">Subtotaal</th>
+                <th class="num-col">BTW</th>
+                <th class="num-col">Totaal</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($invoice->items as $item)
+                <tr>
+                    <td>{{ $item->name }}</td>
+                    <td class="num-col accent">{{ $item->quantity }}</td>
+                    <td class="num-col">€{{ number_format($item->price, 2) }}</td>
+                    <td class="num-col accent">{{ $item->tax_percentage }}%</td>
+                    <td class="num-col">€{{ number_format($item->calculateSubtotal(), 2) }}</td>
+                    <td class="num-col accent">€{{ number_format($item->calculateTax(), 2) }}</td>
+                    <td class="num-col">€{{ number_format($item->calculateTotal(), 2) }}</td>
+                </tr>
+                @if($item->notes)
+                    <tr class="notes-row">
+                        <td colspan="7">{{ $item->notes }}</td>
+                    </tr>
+                @endif
+            @endforeach
+            </tbody>
+            <tfoot>
+            <tr class="total-row">
+                <td colspan="4" class="text-right"><strong>Totaal te betalen:</strong></td>
+                <td class="num-col">{{--€{{ number_format($invoice->calculateTotalExcl(), 2) }}--}}</td>
+                <td class="num-col">{{--€{{ number_format($invoice->calculateTotalTax(), 2) }}--}}</td>
+                <td class="num-col">€{{ number_format($invoice->calculateTotal(), 2) }}</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="footer-container">
+        <br>
+        <div class="footer-info">
+            <div class="payment-info">
+                <h4>Betaling via:</h4>
+                <p>
+                    <strong>Bank:</strong><br/> {{ $settings['iban'] }}<br>
+
+                    {{--<strong>Referentie:</strong> {{ $invoice->invoice_number }}--}}
+                </p>
+            </div>
+
+            <div class="company-info">
+                <h4>Bedrijfsgegevens:</h4>
+                <p>
+                    <strong>{{ $settings['companyname'] }}</strong><br>
                     {{ $settings['companyaddress'] }}<br>
                     {{ $settings['postcode'] }} {{ $settings['city'] }}<br>
-
-                       KVK:  {{ $settings['kvk'] }}<br>
-                        BTW: {{ $settings['btw-nummer'] }}<br><br>
-                    Tel: {{ $settings['phone'] }}</p>--}}
-                </div>
-            </div>
-
-            <div class="invoice-info" >
-                <div>
-                    <h2 style="width: 100%;">Faktuurdatum</h2>
-
-
-                    <p style="width: 100%;">{{ $invoice->issue_date->format('d/m/Y') }}</p>
-                    <p>Betalen voor: {{ $invoice->due_date->format('d/m/Y') }}</p>
-                </div>
+                    KVK: {{ $settings['kvk'] }}<br>
+                    BTW: {{ $settings['btw-nummer'] }}<br>
+                    Tel: {{ $settings['phone'] }}
+                </p>
             </div>
         </div>
-    </div>
-
-
-    <div class="items-section" >
-
-        <div style="padding: 10px;">
-
-            <table class="table table-striped items-table w-100">
-                <thead>
-                <tr>
-                    <th>Omschrijving</th>
-                    <th class="text-right">Hv</th>
-                    <th class="text-right">Stuksprijs</th>
-                    <th class="text-right">BTW%</th>
-                    {{--<th class="text-right">Subtotaal</th>--}}
-                    <th class="text-right">BTW</th>
-                    <th class="text-right">Totaal</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($invoice->items as $item)
-                    <tr>
-                        <td>{{ $item->name }}</td>
-                        <td class="text-right accent">{{ $item->quantity }}</td>
-                        <td class="text-right">€{{ number_format($item->price, 2) }}</td>
-                        <td class="text-right accent">{{ $item->tax_percentage }}%</td>
-                        {{--<td class="text-right">€{{ number_format($item->calculateSubtotal(), 2) }}</td>--}}
-                        <td class="text-right accent">€{{ number_format($item->calculateTax(), 2) }}</td>
-                        <td class="text-right">€{{ number_format($item->calculateTotal(), 2) }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
-                            {{ $item->notes }}
-                        </td>
-                    </tr>
-                @endforeach
-                <tr>
-                    <td colspan="6" class="text-right">&nbsp;</td>
-
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td colspan="6" class="text-right">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="3" class="text-right"><strong>Totaal te betalen:</strong></td>
-                    <td class="text-right">€{{ number_format($invoice->amount_excl, 2) }}</td>
-                    <td class="text-right">{{--€{{ number_format($invoice->getTotalTaxAttribute(), 2) }}--}}</td>
-                    <td class="text-right">€{{ number_format($invoice->calculateTotal(), 2) }}</td>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-
-    </div>
-
-    <div class="footer">
-        <div class="payment-info">
-            <h4>Betaling via:</h4>
-            <p><strong>Bank:</strong> {{ $settings['iban'] }}<br>
-                <strong>Referentie:</strong> {{ $invoice->invoice_number }}</p>
-        </div>
-
-        {{-- {!! dd($invoice) !!}--}}
 
         <div class="terms">
-            <p>Gelieve te betalen binnen {{ config('settings.paymentterm') }} dagen </p>
-            <div class="min-h-screen py-8"
-                 x-data="{
-            showQRCode: false,
-            invoice: @json($invoice),
-            formatCurrency(amount) {
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'EUR'
-                }).format(amount)
-            }
-         }">
-
-                <div class="qrcode max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-                    <!-- QR Code Section -->
-                    {{--<div x-show="showQRCode"
-                         @click.away="showQRCode = false"
-                         class="relative bg-white p-4 rounded-lg shadow-lg">
-                        <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::size(150)
-                                ->format('svg')
-                                ->generate($invoice->generatePaymentUrl())) }}"
-                             alt="Payment QR Code"
-                             class="w-32 h-32">
-                        <div class="mt-2 text-center text-sm text-gray-600">
-
-                            <p class="font-medium" x-text="formatCurrency(invoice.total)"></p>
-                        </div>
-                    </div>--}}
-                </div>
-            </div>
+            <p>Gelieve te betalen binnen {{ config('settings.paymentterm') }} dagen</p>
         </div>
     </div>
 </div>

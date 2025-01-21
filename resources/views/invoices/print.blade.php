@@ -8,6 +8,10 @@
     </style>
 </head>
 <body>
+
+{{--{!! $template->html !!}--}}
+
+
 <div class="invoice">
     <div class="header">
         <div class="logo-section">
