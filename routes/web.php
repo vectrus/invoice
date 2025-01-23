@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ArchivedInvoiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientEmailController;
 use App\Http\Controllers\ReportController;
@@ -50,8 +51,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('client.emails', ClientEmailController::class)->only([
         'index', 'store', 'show'
     ]);
-
     Route::post('client/search', [ClientController::class, 'search'])->name('client.search');
+
+    Route::post('/client/{client}/upload', [ClientController::class, 'uploadFiles'])->name('client.upload');
+    Route::delete('/client/{client}/files/{file}', [ClientController::class, 'deleteFile'])->name('client.files.delete');
+
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
@@ -74,6 +78,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/invoice/{invoice}/reminder', [InvoiceController::class, 'sendReminder'])
         ->name('invoice.reminder');
 
+    Route::resource('archived-invoices', ArchivedInvoiceController::class);
+    Route::post('archived-invoices/import', [ArchivedInvoiceController::class, 'import'])->name('archived-invoices.import');
 
     Route::get('/reports/income', [ReportController::class, 'index'])->name('income');
     Route::post('/reports/generate-report', [ReportController::class, 'generateReport'])->name('generate-report');
@@ -82,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/contacts', ContactController::class);
     Route::get('/contacts/search', [ContactController::class, 'search'])->name('contacts.search');
     Route::get('/contacts/{id}', [ContactController::class, 'getContact'])->name('contacts.get');
+
+
 
 
     Route::resource('templates', InvoiceTemplateController::class);

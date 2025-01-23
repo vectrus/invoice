@@ -102,15 +102,18 @@
                                     <label class="block text-gray-700 text-sm font-bold mb-2">
                                         Status
                                     </label>
+                                 {{--   {!! dd($invoice->status) !!}--}}
                                     <select name="status" class="border-gray-300 mt-1 block w-full">
-                                        <option value="draft" :selected=" invoice.status == draft">
+                                        <option value="draft" @selected(old('status') ?? $invoice->status == 'draft')>
                                             Draft
                                         </option>
-                                        <option value="sent" :selected=" invoice.status == sent">Sent
+                                        <option value="sent" @selected(old('status') ?? $invoice->status == 'sent')>Sent
                                         </option>
-                                        <option value="paid" :selected=" invoice.status == paid">Paid
+                                        <option value="paid" @selected(old('status') ?? $invoice->status == 'paid')>Paid
                                         </option>
-                                        <option value="cash" :selected=" invoice.status == cash">Cash
+                                        <option value="overdue" @selected(old('status') ?? $invoice->status == 'overdue')>Overdue
+                                        </option>
+                                        <option value="overdue" @selected(old('status') ?? $invoice->status == 'cash')>Cash
                                         </option>
                                     </select>
                                 </div>

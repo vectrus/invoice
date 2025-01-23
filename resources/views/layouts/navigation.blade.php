@@ -83,6 +83,14 @@
                                              :active="request()->routeIs('income')">
                                 {{ __('Omzet overzicht') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('archived-invoices.index')"
+                                             :active="request()->routeIs('archived-invoices.index')">
+                                {{ __('Factuur archief') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('archived-invoices.import')"
+                                             :active="request()->routeIs('archived-invoices.import')">
+                                {{ __('Import facturen') }}
+                            </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
                 </div>

@@ -47,4 +47,9 @@ class Client extends Model
     {
         return $this->hasMany(ClientEmail::class);
     }
+
+    public function files()
+    {
+        return $this->hasMany(ClientFile::class);
+    }
 }

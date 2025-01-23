@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Contact;
 use App\Models\Client;
+use App\Models\ClientFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -230,5 +231,35 @@ class ClientController extends Controller
             return back()
                 ->withErrors(['error' => 'Error deleting client: ' . $e->getMessage()]);
         }
+    }
+
+    public function uploadFiles(Request $request, $clientId)
+    {
+        $request->validate([
+            'files.*' => 'required|file|max:10240'
+        ]);
+
+        foreach ($request->file('files') as $file) {
+            $path = $file->store('client-files/' . $clientId, 'public');
+
+            ClientFile::create([
+                'client_id' => $clientId,
+                'name' => $file->getClientOriginalName(),
+                'path' => $path,
+                'mime_type' => $file->getMimeType(),
+                'size' => $file->getSize()
+            ]);
+        }
+
+        return back()->with('success', 'Bestanden geüpload');
+    }
+
+    public function deleteFile(Request $request, $clientId, $fileId)
+    {
+        $file = ClientFile::findOrFail($fileId);
+        Storage::disk('public')->delete($file->path);
+        $file->delete();
+
+        return back()->with('success', 'Bestand verwijderd');
     }
 }
